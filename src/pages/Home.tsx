@@ -2,6 +2,7 @@ import Header from "../components/Header"
 import CarouselHome from "../components/Carousel";
 import Categories from "../components/Categories";
 import { categoriesCardData } from "../data/CategoryCardData";
+import FeatureProductsCard from "../components/FeatureProductCard";
 const Home = () => {
 
     return (
@@ -31,6 +32,7 @@ const Home = () => {
                     ))}
                 </div>
             </section>
+            <FeatureProductsCard />
         </>
     )
 }
