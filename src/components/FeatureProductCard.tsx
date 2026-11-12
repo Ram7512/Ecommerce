@@ -1,7 +1,10 @@
 import useFeaturedProducts from "../hooks/FeatureProductHook";
 import { NavLink } from "react-router";
+import { useCartStore } from "../Stores/CartStore";
 function FeatureProductsCard() {
-
+ const addToCart = useCartStore(
+        (state) => state.addToCart
+ );
     const { data, error, isLoading } = useFeaturedProducts();
 
     if (isLoading) {
@@ -49,8 +52,7 @@ function FeatureProductsCard() {
 
                 {data?.products.map((product) => (
 
-                    <NavLink
-                        to={`/products/${product.id}`}
+                    <div
                         key={product.id}
                         className="bg-white rounded-xl border border-gray-200 overflow-hidden group hover:shadow-lg transition duration-300 no-underline"
                     >
@@ -107,15 +109,26 @@ function FeatureProductsCard() {
                                 </span>
 
                             </div>
+                            <div className="flex justify-between">
 
-                            <button className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg font-semibold transition">
-                                <i className="bi bi-cart-plus mr-2"></i>
-                                Add to Cart
-                            </button>
+                                <button 
+                                onClick={() => addToCart(product)}
+                                className="mt-4 bg-blue-500 hover:bg-blue-700 text-white py-1.5 px-2.5 rounded-lg text-sm font-semibold transition">
+                                    <i className="bi bi-cart-plus mr-2"></i>
+                                    Add to Cart
+                                </button>
+                                <NavLink
+                                    to={`/products/${product.id}`}
+                                    className="mt-4 bg-blue-500 hover:bg-blue-700 text-white py-1.5 px-2.5 rounded-lg text-sm font-semibold transition">
+                                    <i className="bi bi-eye mr-2"></i>
+                                    View Detail
+                                </NavLink>
+
+                            </div>
 
                         </div>
 
-                    </NavLink>
+                    </div>
 
                 ))}
 
