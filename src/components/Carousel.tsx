@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 const CarouselHome = () => {
 
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [isHovered, setIsHovered] = useState(false);
 
     const nextSlide = () => {
         setCurrentSlide((prev) =>
@@ -18,19 +19,19 @@ const CarouselHome = () => {
 
     const slide = slides[currentSlide];
 
-useEffect(() => {
+    useEffect(() => {
+        if (isHovered) return;
+        const interval = setInterval(() => {
 
-    const interval = setInterval(() => {
+            setCurrentSlide((prev) =>
+                prev === slides.length - 1 ? 0 : prev + 1
+            );
 
-        setCurrentSlide((prev) =>
-            prev === slides.length - 1 ? 0 : prev + 1
-        );
+        }, 3000);
 
-    }, 4000);
+        return () => clearInterval(interval);
 
-    return () => clearInterval(interval);
-
-}, []);
+    }, [isHovered]);
 
     return (
         <>
@@ -39,6 +40,8 @@ useEffect(() => {
 
                 <div
                     className="relative h-[450px] md:h-[550px] rounded-2xl overflow-hidden"
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
                     style={{
                         backgroundImage: `url(${slide.image})`,
                         backgroundSize: "cover",
@@ -119,26 +122,25 @@ useEffect(() => {
                         <i className="bi bi-chevron-right text-xl"></i>
 
                     </button>
-                     {/* Slide Indicators */}
+                    {/* Slide Indicators */}
 
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3">
+                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3">
 
-                {slides.map((_, index) => (
+                        {slides.map((_, index) => (
 
-                    <button
-                        key={index}
-                        onClick={() => setCurrentSlide(index)}
-                        aria-label={`Go to slide ${index + 1}`}
-                        className={`h-2.5 rounded-full transition-all duration-300 ${
-                            currentSlide === index
-                                ? "w-9 bg-blue-500"
-                                : "w-2.5 bg-white/70"
-                        }`}
-                    />
+                            <button
+                                key={index}
+                                onClick={() => setCurrentSlide(index)}
+                                aria-label={`Go to slide ${index + 1}`}
+                                className={`h-2.5 rounded-full transition-all duration-300 ${currentSlide === index
+                                        ? "w-9 bg-blue-500"
+                                        : "w-2.5 bg-white/70"
+                                    }`}
+                            />
 
-                ))}
+                        ))}
 
-            </div>
+                    </div>
                 </div>
             </section>
 
