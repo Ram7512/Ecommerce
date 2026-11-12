@@ -1,0 +1,47 @@
+src/
+│
+├── components/
+│   ├── Header.tsx
+│   ├── Footer.tsx
+│   |── ProductCard.tsx
+│  
+│
+├── pages/
+│   ├── Home.tsx
+│   ├── Login.tsx
+│   ├── Register.tsx
+│   ├── Products.tsx
+│   ├── ProductDetails.tsx
+│   ├── Cart.tsx
+│   ├── Wishlist.tsx
+│   ├── Profile.tsx
+│   
+│
+├── services/
+│   ├── authServices.ts
+│   ├── productServices.ts
+│   ├── cartServices.ts
+│   └── postServices.ts
+│
+├── hooks/
+│   ├── useProducts.ts
+│   ├── useCart.ts
+│   └── usePosts.ts
+│
+├── store/
+│   ├── authStore.ts
+│   ├── cartStore.ts
+│   └── wishlistStore.ts
+│
+├── schemas/
+│   ├── loginSchema.ts
+│   └── registerSchema.ts
+│
+├── types/
+│   ├── product.ts
+│   ├── cart.ts
+│   └── user.ts
+│
+├── App.tsx
+├── main.tsx
+└── index.css
