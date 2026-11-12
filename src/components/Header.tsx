@@ -97,7 +97,7 @@ function Header() {
 
             <nav className="border-t border-gray-100">
 
-                <div className="max-w-7xl mx-auto px-6 py-3 flex gap-10 text-sm font-medium text-gray-700">
+                <div className="max-w-2xl mx-auto px-6 py-3 flex justify-between text-sm font-bold text-gray-700">
 
                     <NavLink to="/" className="hover:text-blue-600">
                         Home

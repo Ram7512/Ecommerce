@@ -2,7 +2,7 @@ import type { FeatureProductsResponse, FeatureProduct } from "../types/FeaturePr
 
 const API_URL = "https://dummyjson.com/products";
 
-export const featureProductServices = {
+export const productServices = {
 
     getFeaturedProducts: async (): Promise<FeatureProductsResponse> => {
         const response = await fetch(`${API_URL}?limit=8`);
@@ -19,6 +19,16 @@ export const featureProductServices = {
         }
         return response.json();
     },
+
+    getProducts: async (): Promise<FeatureProductsResponse> => {
+    const response = await fetch("https://dummyjson.com/products");
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch products");
+    }
+
+    return response.json();
+},
 
 
 };
