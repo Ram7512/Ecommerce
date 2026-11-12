@@ -1,5 +1,5 @@
 import useFeaturedProducts from "../hooks/FeatureProductHook";
-
+import { NavLink } from "react-router";
 function FeatureProductsCard() {
 
     const { data, error, isLoading } = useFeaturedProducts();
@@ -49,11 +49,11 @@ function FeatureProductsCard() {
 
                 {data?.products.map((product) => (
 
-                    <div
+                    <NavLink
+                        to={`/products/${product.id}`}
                         key={product.id}
-                        className="bg-white rounded-xl border border-gray-200 overflow-hidden group hover:shadow-lg transition duration-300"
+                        className="bg-white rounded-xl border border-gray-200 overflow-hidden group hover:shadow-lg transition duration-300 no-underline"
                     >
-
                         <div className="relative h-52 bg-gray-100 overflow-hidden">
 
                             <img
@@ -115,7 +115,7 @@ function FeatureProductsCard() {
 
                         </div>
 
-                    </div>
+                    </NavLink>
 
                 ))}
 
