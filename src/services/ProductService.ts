@@ -20,8 +20,8 @@ export const productServices = {
         return response.json();
     },
 
-    getProducts: async (): Promise<FeatureProductsResponse> => {
-        const response = await fetch(`${API_URL}`);
+    getProducts: async ( limit: number, skip: number): Promise<FeatureProductsResponse> => {
+        const response = await fetch(`${API_URL}?limit=${limit}&skip=${skip}`);
 
         if (!response.ok) {
             throw new Error("Failed to fetch products");
@@ -30,9 +30,9 @@ export const productServices = {
         return response.json();
     },
 
-    getSearch: async (search: string): Promise<FeatureProductsResponse> => {
+    getSearch: async (search: string,  limit: number, skip: number): Promise<FeatureProductsResponse> => {
         const response = await fetch(
-            `${API_URL}/search?q=${encodeURIComponent(search)}`
+            `${API_URL}/search?q=${encodeURIComponent(search)}&limit=${limit}&skip=${skip}`
         );
 
         if (!response.ok) {

@@ -1,6 +1,6 @@
 import { useCartStore } from "../Stores/CartStore";
 import { NavLink } from "react-router";
-import { useQueryState } from "nuqs";
+import { useQueryState, parseAsInteger } from "nuqs";
 import { useNavigate } from "react-router";
 import { useWishlistStore } from "../Stores/WishlistStore";
 import { useAuthStore } from "../Stores/AuthenticationStore";
@@ -10,6 +10,9 @@ import { useAuthStore } from "../Stores/AuthenticationStore";
 function Header() {
 
     const [search, setSearch] = useQueryState("q", { defaultValue: "" });
+    const [, setPage] = useQueryState("page",
+        parseAsInteger.withDefault(1)
+    );
     const navigate = useNavigate();
     const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -160,7 +163,12 @@ function Header() {
                         Home
                     </NavLink>
 
-                    <NavLink to="/products" className="hover:text-blue-600">
+                    <NavLink to="/products"
+                        onClick={() => {
+                            setSearch(null);
+                            setPage(1);
+                        }}
+                        className="hover:text-blue-600">
                         Products
                     </NavLink>
 

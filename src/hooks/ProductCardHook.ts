@@ -1,17 +1,16 @@
 import useSWR from "swr";
 import { productServices } from "../services/ProductService";
 import type { FeatureProductsResponse } from "../types/FeatureProductType";
-function useProducts(search: string) {
-
+const limit = 12;
+function useProducts(search: string, page: number) {
+    const skip = (page - 1) * limit;
     const { data, error, isLoading } = useSWR<FeatureProductsResponse>(
-       search.trim()
-            ? ["products", search]
-            : "products",
-
+        ["products", search, page],
+       
         () => {
             return search.trim()
-                ? productServices.getSearch(search)
-                : productServices.getProducts();
+                ? productServices.getSearch(search, limit, skip)
+                : productServices.getProducts(limit, skip);
         }
     );
 
@@ -20,6 +19,7 @@ function useProducts(search: string) {
         data,
         error,
         isLoading,
+        limit
     };
 }
 
