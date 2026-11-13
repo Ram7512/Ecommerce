@@ -5,6 +5,7 @@ import { categoriesCardData } from "../data/CategoryCardData";
 import ProductsCard from "../components/ProductCard";
 import useProducts from "../hooks/FeatureProductHook";
 import { NavLink } from "react-router";
+import Footer from "../components/Footer";
 const Home = () => {
     const { data, error, isLoading } = useProducts();
 
@@ -82,6 +83,7 @@ const Home = () => {
                     ))}
                 </div>
             </section>
+            <Footer />
         </>
     )
 }

@@ -3,6 +3,7 @@ import ProductsCard from "../components/ProductCard";
 import Header from "../components/Header";
 import { useQueryState, parseAsInteger } from "nuqs";
 import { useState, useEffect } from "react";
+import Footer from "../components/Footer";
 
 function Products() {
     const [search] = useQueryState("q", { defaultValue: "" });
@@ -129,6 +130,7 @@ function Products() {
                     </div>
                 )}
             </section>
+            <Footer />
         </>
     );
 }
