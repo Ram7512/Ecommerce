@@ -3,6 +3,9 @@ import { NavLink } from "react-router";
 import { useQueryState } from "nuqs";
 import { useNavigate } from "react-router";
 import { useWishlistStore } from "../Stores/WishlistStore";
+import { useAuthStore } from "../Stores/AuthenticationStore";
+
+
 
 function Header() {
 
@@ -26,6 +29,15 @@ function Header() {
 
     const wishlistCount = wishlistItems.length;
     console.log("Header Wishlist Items:", wishlistCount);
+
+    const user = useAuthStore((state) => state.user);
+    const logout = useAuthStore((state) => state.logout);
+
+    const handleLogout = () => {
+        logout();
+        navigate("/login");
+    };
+
     return (
 
         <header className="w-full bg-white shadow-sm">
@@ -71,13 +83,30 @@ function Header() {
 
                     {/* Account */}
 
-                    <NavLink
-                        to="/login"
-                        className="flex flex-col items-center text-gray-600 hover:text-blue-600 no-underline"
-                    >
-                        <i className="bi bi-person text-2xl text-red-500"></i>
-                        <span className="text-xs">Account</span>
-                    </NavLink>
+                    {user ? (
+                        <div className="flex items-center gap-3">
+
+                            <span className="font-medium text-gray-700">
+                                Hi, {user.firstName}
+                            </span>
+
+                            <button
+                                onClick={handleLogout}
+                                className="text-red-500 hover:text-red-700 font-medium"
+                            >
+                                Logout
+                            </button>
+
+                        </div>
+                    ) : (
+                        <NavLink
+                            to="/login"
+                            className="text-gray-700 hover:text-blue-600 no-underline"
+                        >
+                            <i className="bi bi-person mr-2"></i>
+                            Account
+                        </NavLink>
+                    )}
 
                     {/* Wishlist */}
 
