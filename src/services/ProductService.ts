@@ -21,14 +21,26 @@ export const productServices = {
     },
 
     getProducts: async (): Promise<FeatureProductsResponse> => {
-    const response = await fetch("https://dummyjson.com/products");
+        const response = await fetch(`${API_URL}`);
 
-    if (!response.ok) {
-        throw new Error("Failed to fetch products");
-    }
+        if (!response.ok) {
+            throw new Error("Failed to fetch products");
+        }
 
-    return response.json();
-},
+        return response.json();
+    },
+
+    getSearch: async (search: string): Promise<FeatureProductsResponse> => {
+        const response = await fetch(
+            `${API_URL}/search?q=${encodeURIComponent(search)}`
+        );
+
+        if (!response.ok) {
+            throw new Error("Failed to search products");
+        }
+
+        return response.json();
+    },
 
 
 };

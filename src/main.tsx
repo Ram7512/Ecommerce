@@ -6,16 +6,21 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 import ProductDetails from './pages/ProductDetails';
 import CartItems from './pages/CartItems';
 import Products from './pages/Products';
+import { NuqsAdapter } from 'nuqs/adapters/react'
+import Wishlist from './pages/WishlistItems';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path="/products/:id" element={<ProductDetails />} />
-        <Route path='/cart' element = {<CartItems />} />
-        <Route path='/products' element ={<Products />} />
-       </Routes>
+      <NuqsAdapter>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path="/products/:id" element={<ProductDetails />} />
+          <Route path='/cart' element={<CartItems />} />
+          <Route path='/products' element={<Products />} />
+          <Route  path='/wishlist' element={<Wishlist />} />
+        </Routes>
+      </NuqsAdapter>
     </BrowserRouter>
   </StrictMode>,
 )

@@ -1,12 +1,18 @@
 import useSWR from "swr";
 import { productServices } from "../services/ProductService";
 import type { FeatureProductsResponse } from "../types/FeatureProductType";
-
-function useProducts() {
+function useProducts(search: string) {
 
     const { data, error, isLoading } = useSWR<FeatureProductsResponse>(
-        "all-products",
-        productServices.getProducts
+       search.trim()
+            ? ["products", search]
+            : "products",
+
+        () => {
+            return search.trim()
+                ? productServices.getSearch(search)
+                : productServices.getProducts();
+        }
     );
 
     return {

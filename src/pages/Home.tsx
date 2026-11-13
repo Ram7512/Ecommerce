@@ -46,7 +46,9 @@ const Home = () => {
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
 
                     {categoriesCardData.map((category) => (
-                        <Categories category={category} />
+                        <Categories 
+                        key={category.id}
+                        category={category} />
                     ))}
                 </div>
             </section>
@@ -74,8 +76,9 @@ const Home = () => {
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {data?.products.map((product) => (
-
-                        <ProductsCard product={product} />
+                        <ProductsCard 
+                        key={product.id}
+                        product={product} />
                     ))}
                 </div>
             </section>

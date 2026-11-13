@@ -1,11 +1,24 @@
 import useProducts from "../hooks/ProductCardHook";
 import ProductsCard from "../components/ProductCard";
 import Header from "../components/Header";
-// import { NavLink } from "react-router";
+import { useQueryState } from "nuqs";
+import { useState, useEffect } from "react";
 
 function Products() {
+    const [search] = useQueryState("q", { defaultValue: "" });
+    const [debouncedSearch, setDebouncedSearch] = useState(search);
 
-    const { data, error, isLoading } = useProducts();
+    useEffect(() => {
+
+        const timer = setTimeout(() => {
+            setDebouncedSearch(search);
+        }, 700);
+
+        return () => clearTimeout(timer);
+
+    }, [search]);
+
+    const { data, error, isLoading } = useProducts(debouncedSearch);
 
     if (isLoading) {
         return (
@@ -39,19 +52,20 @@ function Products() {
                     </p>
                 </div>
 
-                {/* Product Count */}
-                <p className="mb-5 text-gray-600">
-                    Showing {data?.products.length} products
-                </p>
-
                 {/* Products Grid */}
 
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {data?.products.map((product) => (
-                        <ProductsCard product={product} />
+                        <ProductsCard
+                            key={product.id}
+                            product={product} />
                     ))}
                 </div>
-
+                {data?.products.length === 0 && (
+                    <p className="col-span-full text-center text-gray-500 py-10">
+                        No products found.
+                    </p>
+                )}
 
 
             </section>

@@ -1,17 +1,31 @@
 import { useCartStore } from "../Stores/CartStore";
 import { NavLink } from "react-router";
+import { useQueryState } from "nuqs";
+import { useNavigate } from "react-router";
+import { useWishlistStore } from "../Stores/WishlistStore";
 
 function Header() {
 
-    // Get cart items from Zustand store
-    const cartItems = useCartStore((state) => state.cartItems);
+    const [search, setSearch] = useQueryState("q", { defaultValue: "" });
+    const navigate = useNavigate();
+    const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
-    // Calculate total cart quantity
+        navigate(`/products?q=${encodeURIComponent(search)}`);
+    };
+
+    const cartItems = useCartStore((state) => state.cartItems);
     const cartCount = cartItems.reduce(
         (total, item) => total + item.quantity,
         0
     );
 
+    const wishlistItems = useWishlistStore(
+        (state) => state.wishlistItems
+    );
+
+    const wishlistCount = wishlistItems.length;
+    console.log("Header Wishlist Items:", wishlistCount);
     return (
 
         <header className="w-full bg-white shadow-sm">
@@ -30,16 +44,25 @@ function Header() {
 
                 <div className="hidden md:flex flex-1 max-w-xl relative">
 
-                    <input
-                        type="text"
-                        placeholder="Search for products..."
-                        className="w-full border border-gray-300 rounded-lg px-4 py-3 pr-12 outline-none focus:ring-2 focus:ring-blue-500"
-                    />
+                    <form
+                        onSubmit={handleSearch}
+                        className="hidden md:flex flex-1 max-w-xl relative"
+                    >
+                        <input
+                            type="text"
+                            placeholder="Search for products..."
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            className="w-full border border-gray-300 rounded-lg px-4 py-3 pr-12 outline-none focus:ring-2 focus:ring-blue-500"
+                        />
 
-                    <button className="absolute right-3 top-3 text-gray-500">
-                        <i className="bi bi-search"></i>
-                    </button>
-
+                        <button
+                            type="submit"
+                            className="absolute right-3 top-3 text-gray-500"
+                        >
+                            <i className="bi bi-search"></i>
+                        </button>
+                    </form>
                 </div>
 
                 {/* Header Icons */}
@@ -60,10 +83,15 @@ function Header() {
 
                     <NavLink
                         to="/wishlist"
-                        className="flex flex-col items-center text-gray-600 hover:text-blue-600 no-underline"
+                        className="flex flex-col items-center text-gray-600 hover:text-blue-600 no-underline relative"
                     >
-                        <i className="bi bi-heart text-2xl text-red-500"></i>
+                        <i className="bi bi-heart text-xl text-red-600"></i>
+
                         <span className="text-xs">Wishlist</span>
+
+                        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                            {wishlistCount}
+                        </span>
                     </NavLink>
 
                     {/* Cart */}

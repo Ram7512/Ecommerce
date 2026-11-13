@@ -1,3 +1,4 @@
+import Header from "../components/Header";
 import { useCartStore } from "../Stores/CartStore";
 
 function CartItems() {
@@ -31,6 +32,8 @@ function CartItems() {
     );
 
     return (
+        <>
+        <Header />
         <section className="max-w-7xl mx-auto px-4 py-12">
 
             <h1 className="text-3xl font-bold mb-8">
@@ -169,6 +172,7 @@ function CartItems() {
             )}
 
         </section>
+        </>
     );
 }
 
