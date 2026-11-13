@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import { productServices } from "../services/ProductService";
 import type { FeatureProductsResponse } from "../types/FeatureProductType";
-const limit = 12;
+const limit = 16;
 function useProducts(search: string, page: number) {
     const skip = (page - 1) * limit;
     const { data, error, isLoading } = useSWR<FeatureProductsResponse>(

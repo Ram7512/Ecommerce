@@ -73,12 +73,32 @@ function ProductsCard({ product }: { product: FeatureProduct }) {
                     {product.description}
                 </p>
 
-                <div className="flex items-center gap-1 mt-3 text-yellow-500">
-                    <i className="bi bi-star-fill"></i>
+                <div className="flex items-center gap-2 mt-4">
 
-                    <span className="text-sm text-gray-600">
-                        {product.rating}
+                    <div className="flex text-yellow-400">
+
+                        {Array.from({ length: 5 }).map((_, index) => (
+
+                            <i
+                                key={index}
+                                className={`bi ${index < Math.round(product.rating)
+                                    ? "bi-star-fill"
+                                    : "bi-star"
+                                    }`}
+                            ></i>
+
+                        ))}
+
+                    </div>
+
+                    <span className="text-gray-600 text-sm">
+                        {product.rating} / 5
                     </span>
+
+                    <span className="text-gray-400 text-sm">
+                        ({product.reviews.length} Reviews)
+                    </span>
+
                 </div>
 
                 <div className="flex items-center gap-2 mt-3">

@@ -10,7 +10,8 @@ import { NuqsAdapter } from 'nuqs/adapters/react'
 import Wishlist from './pages/WishlistItems';
 import Login from './pages/Login';
 import Register from './pages/Register';
-
+import ProtectedRoute from './components/AuthProtectedRoute';
+import Posts from './pages/Post';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
@@ -18,11 +19,14 @@ createRoot(document.getElementById('root')!).render(
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path="/products/:id" element={<ProductDetails />} />
-          <Route path='/cart' element={<CartItems />} />
           <Route path='/products' element={<Products />} />
-          <Route  path='/wishlist' element={<Wishlist />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
+          <Route path="/posts" element={<Posts />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path='/cart' element={<CartItems />} />
+            <Route path='/wishlist' element={<Wishlist />} />
+          </Route>
         </Routes>
       </NuqsAdapter>
     </BrowserRouter>

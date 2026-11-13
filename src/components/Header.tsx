@@ -172,8 +172,8 @@ function Header() {
                         Products
                     </NavLink>
 
-                    <NavLink to="/categories" className="hover:text-blue-600">
-                        Categories
+                    <NavLink to="/posts" className="hover:text-blue-600">
+                        Posts
                     </NavLink>
 
                     <NavLink to="/about" className="hover:text-blue-600">

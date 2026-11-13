@@ -1,7 +1,9 @@
+import { NavLink } from "react-router";
 import type { CategoryCardType } from "../types/CategoryCardType";
 
 function Categories({ category }: { category: CategoryCardType }) {
     return (
+        <NavLink to="/products">
         <div key={category.id} className="group cursor-pointer">
             <div className="relative h-48 rounded-xl overflow-hidden">
 
@@ -25,6 +27,7 @@ function Categories({ category }: { category: CategoryCardType }) {
                 {category.count}
             </p>
         </div>
+        </NavLink>
 
 
     );
