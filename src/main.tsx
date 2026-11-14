@@ -12,6 +12,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ProtectedRoute from './components/AuthProtectedRoute';
 import Posts from './pages/Post';
+import Contact from './pages/Contact';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
@@ -23,6 +24,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path="/posts" element={<Posts />} />
+          <Route path='/contact' element= {<Contact />} />
           <Route element={<ProtectedRoute />}>
             <Route path='/cart' element={<CartItems />} />
             <Route path='/wishlist' element={<Wishlist />} />
