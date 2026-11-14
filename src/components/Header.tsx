@@ -4,11 +4,11 @@ import { useQueryState, parseAsInteger } from "nuqs";
 import { useNavigate } from "react-router";
 import { useWishlistStore } from "../Stores/WishlistStore";
 import { useAuthStore } from "../Stores/AuthenticationStore";
-
+import { useState } from "react";
 
 
 function Header() {
-
+const [showProfile, setShowProfile] = useState(false);
     const [search, setSearch] = useQueryState("q", { defaultValue: "" });
     const [, setPage] = useQueryState("page",
         parseAsInteger.withDefault(1)
@@ -39,6 +39,7 @@ function Header() {
     const handleLogout = () => {
         logout();
         navigate("/login");
+        setShowProfile(false);
     };
 
     return (
@@ -86,19 +87,62 @@ function Header() {
 
                     {/* Account */}
 
+                    
                     {user ? (
-                        <div className="flex items-center gap-3">
+                        <div className="relative">
 
-                            <span className="font-medium text-gray-700">
-                                Hi, {user.firstName}
-                            </span>
+                            {/* User Name Button */}
 
                             <button
-                                onClick={handleLogout}
-                                className="text-red-500 hover:text-red-700 font-medium"
+                                onClick={() => setShowProfile(!showProfile)}
+                                className="flex items-center gap-2 text-gray-700 font-medium"
                             >
-                                Logout
+                                <img
+                                    src={user.image}
+                                    alt="Profile"
+                                    className="w-9 h-9 rounded-full object-cover"
+                                />
+
+                                <span>Hi, {user.firstName}</span>
+
+                                <i className="bi bi-chevron-down"></i>
                             </button>
+
+                            {/* Dropdown */}
+
+                            {showProfile && (
+                                <div className="absolute right-0 top-12 w-80 bg-white shadow-lg rounded-lg p-4 z-50">
+
+                                    <div className="flex items-center gap-3 border-b pb-3 mb-3">
+
+                                        <img
+                                            src={user.image}
+                                            alt="Profile"
+                                            className="w-12 h-12 rounded-full object-cover"
+                                        />
+
+                                        <div>
+                                            <h6 className="font-semibold text-gray-800">
+                                                {user.firstName} {user.lastName}
+                                            </h6>
+
+                                            <p className="text-sm text-gray-500">
+                                                {user.email}
+                                            </p>
+                                        </div>
+
+                                    </div>
+
+                                    <button
+                                        onClick={handleLogout}
+                                        className="w-full text-left text-red-500 hover:text-red-700 font-medium"
+                                    >
+                                        <i className="bi bi-box-arrow-right mr-2"></i>
+                                        Logout
+                                    </button>
+
+                                </div>
+                            )}
 
                         </div>
                     ) : (
@@ -110,6 +154,7 @@ function Header() {
                             Account
                         </NavLink>
                     )}
+                    
 
                     {/* Wishlist */}
 

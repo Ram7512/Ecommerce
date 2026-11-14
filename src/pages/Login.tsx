@@ -28,15 +28,9 @@ function Login() {
     ) => {
         try {
             setIsLoading(true);
-            setError("");
-
-            // Step 1: Login API call
+            // setError("");
             const response = await authServices.login(data);
-
-            // Step 2: Save user details in Zustand
             setAuth(response);
-
-            // Step 3: Navigate to Home
             navigate("/");
 
         } catch (err) {

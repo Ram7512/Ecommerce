@@ -15,7 +15,6 @@ function useProducts(search: string, page: number) {
     );
 
     return {
-        // products: data?.products ?? [],
         data,
         error,
         isLoading,
