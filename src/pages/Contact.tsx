@@ -1,6 +1,11 @@
+import Footer from "../components/Footer";
+import Header from "../components/Header";
+
 function Contact() {
     return (
         <>
+        <Header />
+
             <div className="bg-gray-50 min-h-screen">
 
                 {/* Hero Section */}
@@ -220,6 +225,8 @@ function Contact() {
                 </section>
 
             </div>
+
+            <Footer />
 
         </>
     );

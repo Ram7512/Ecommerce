@@ -221,10 +221,6 @@ const [showProfile, setShowProfile] = useState(false);
                         Posts
                     </NavLink>
 
-                    <NavLink to="/about" className="hover:text-blue-600">
-                        About Us
-                    </NavLink>
-
                     <NavLink to="/contact" className="hover:text-blue-600">
                         Contact
                     </NavLink>
