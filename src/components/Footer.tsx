@@ -54,7 +54,7 @@ function Footer() {
                         <ul className="space-y-3 text-sm">
                             <li><a href="#" className="hover:text-blue-400">About Us</a></li>
                             <li><a href="#" className="hover:text-blue-400">Contact Us</a></li>
-                            <li><a href="#" className="hover:text-blue-400">FAQs</a></li>
+                            <li><NavLink to="/contact" className="hover:text-blue-400">FAQs</NavLink></li>
                             <li><a href="#" className="hover:text-blue-400">Shipping Policy</a></li>
                         </ul>
                     </div>

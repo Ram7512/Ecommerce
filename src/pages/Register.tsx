@@ -3,14 +3,16 @@ import * as v from "valibot";
 import { NavLink } from "react-router";
 import Header from "../components/Header";
 import { useState } from "react";
-import { authServices } from "../services/AuthanticationServive";
 import { RegisterSchema } from "../schemas/RegisterSchema";
-
+import { useRegister } from "../hooks/AuthenticationHook";
 function Register() {
-
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+    const {
+        trigger: register,
+        isMutating: isLoading,
+        error,
+        reset,
+    } =useRegister();
 
     const registerForm = useForm({
         schema: RegisterSchema,
@@ -20,26 +22,16 @@ function Register() {
         data: v.InferOutput<typeof RegisterSchema>
     ) => {
         try {
-            setIsLoading(true);
-            setError("");
+            reset();
             setSuccess("");
-
-            const response = await authServices.register(data);
-
+            const response = await register(data);
             console.log("Registered User:", response);
-
             setSuccess("Account created successfully! Please login.");
-
         } catch (err) {
-            setError(
-                err instanceof Error
-                    ? err.message
-                    : "Registration failed"
-            );
-        } finally {
-            setIsLoading(false);
+            console.log(err);
         }
     };
+
     return (
         <>
             <Header />
@@ -230,10 +222,9 @@ function Register() {
 
                         {error && (
                             <p className="text-red-500 text-sm text-center">
-                                {error}
+                                {error.message}
                             </p>
                         )}
-
                         {success && (
                             <p className="text-green-600 text-sm text-center">
                                 {success}

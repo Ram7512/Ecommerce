@@ -147,8 +147,8 @@ function ProductDetails() {
                                         key={index}
                                         onClick={() => setSelectedImage(image)}
                                         className={`w-20 h-20 border rounded-lg p-2 ${selectedImage === image
-                                            ? "border-blue-600"
-                                            : "border-gray-200"
+                                            ? "border-dark-900"
+                                            : "border-gray-300"
                                             }`}
                                     >
 

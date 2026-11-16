@@ -1,10 +1,9 @@
 import { Form, Field, useForm } from "@formisch/react";
 import { NavLink } from "react-router";
 import Header from "../components/Header";
-import { useState } from "react";
+import { useLogin } from "../hooks/AuthenticationHook";
 import { useNavigate } from "react-router";
 import * as v from "valibot";
-import { authServices } from "../services/AuthanticationServive";
 import { useAuthStore } from "../Stores/AuthenticationStore";
 import { LoginSchema } from "../schemas/LoginSchema";
 
@@ -16,8 +15,13 @@ function Login() {
         (state) => state.setAuth
     );
 
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState("");
+    // const [isLoading, setIsLoading] = useState(false);
+    // const [error, setError] = useState("");
+    const {
+        trigger: login,
+        isMutating: isLoading,
+        error,
+    } = useLogin();
 
     const loginForm = useForm({
         schema: LoginSchema,
@@ -27,20 +31,13 @@ function Login() {
         data: v.InferOutput<typeof LoginSchema>
     ) => {
         try {
-            setIsLoading(true);
-            // setError("");
-            const response = await authServices.login(data);
+
+            const response = await login(data);
             setAuth(response);
             navigate("/");
 
         } catch (err) {
-            setError(
-                err instanceof Error
-                    ? err.message
-                    : "Something went wrong"
-            );
-        } finally {
-            setIsLoading(false);
+            console.log(err);
         }
     };
 
@@ -142,7 +139,7 @@ function Login() {
 
                         {error && (
                             <p className="text-red-500 text-sm text-center">
-                                {error}
+                                {error.message}
                             </p>
                         )}
 
