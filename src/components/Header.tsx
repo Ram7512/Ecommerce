@@ -5,10 +5,12 @@ import { useNavigate } from "react-router";
 import { useWishlistStore } from "../Stores/WishlistStore";
 import { useAuthStore } from "../Stores/AuthenticationStore";
 import { useState } from "react";
-
+import useSWR from "swr";
+import { useEffect } from "react";
+import { cartServices } from "../services/CartServices";
 
 function Header() {
-const [showProfile, setShowProfile] = useState(false);
+    const [showProfile, setShowProfile] = useState(false);
     const [search, setSearch] = useQueryState("q", { defaultValue: "" });
     const [, setPage] = useQueryState("page",
         parseAsInteger.withDefault(1)
@@ -21,6 +23,21 @@ const [showProfile, setShowProfile] = useState(false);
     };
 
     const cartItems = useCartStore((state) => state.cartItems);
+    const loadApiCartItems = useCartStore(
+        (state) => state.loadApiCartItems
+    );
+
+    const { data: cartData } = useSWR(
+        "api-cart",
+        cartServices.getCart
+    );
+
+    useEffect(() => {
+        if (cartData) {
+            loadApiCartItems(cartData.products);
+        }
+    }, [cartData, loadApiCartItems]);
+
     const cartCount = cartItems.reduce(
         (total, item) => total + item.quantity,
         0
@@ -87,7 +104,7 @@ const [showProfile, setShowProfile] = useState(false);
 
                     {/* Account */}
 
-                    
+
                     {user ? (
                         <div className="relative">
 
@@ -154,7 +171,7 @@ const [showProfile, setShowProfile] = useState(false);
                             Account
                         </NavLink>
                     )}
-                    
+
 
                     {/* Wishlist */}
 

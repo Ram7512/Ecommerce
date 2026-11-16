@@ -5,6 +5,7 @@ import type { CartState } from "../types/CartItemsType";
 export const useCartStore = create<CartState>()((set) => ({
 
     cartItems: [],
+    apiCartLoaded: false,
 
     addToCart: (product) =>
         set((state) => {
@@ -59,5 +60,47 @@ export const useCartStore = create<CartState>()((set) => ({
         })),
 
     clearCart: () => set({ cartItems: [] }),
+
+    loadApiCartItems: (products) =>
+        set((state) => {
+
+            if (state.apiCartLoaded) {
+                return {};
+            }
+
+            const apiItems = products.map((product) => ({
+                id: product.id,
+                title: product.title,
+                price: product.price,
+                thumbnail: product.thumbnail,
+                quantity: product.quantity,
+            }));
+
+            const mergedItems = [...apiItems];
+
+            state.cartItems.forEach((localItem) => {
+
+                const existingItem = mergedItems.find(
+                    (item) => item.id === localItem.id
+                );
+
+                if (existingItem) {
+
+                    existingItem.quantity += localItem.quantity;
+
+                } else {
+
+                    mergedItems.push(localItem);
+
+                }
+
+            });
+
+            return {
+                cartItems: mergedItems,
+                apiCartLoaded: true,
+            };
+
+        }),
 
 }));

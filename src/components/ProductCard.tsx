@@ -25,6 +25,14 @@ function ProductsCard({ product }: { product: FeatureProduct }) {
         (item) => item.id === product.id
     );
 
+    const cartItems = useCartStore(
+        (state) => state.cartItems
+    );
+
+    const isInCart = cartItems.some(
+        (item) => item.id === product.id
+    );
+
     return (
 
 
@@ -119,9 +127,14 @@ function ProductsCard({ product }: { product: FeatureProduct }) {
 
                     <button
                         onClick={() => addToCart(product)}
-                        className="mt-4 bg-blue-500 hover:bg-blue-700 text-white py-1.5 px-2.5 rounded-lg text-sm font-semibold transition">
-                        <i className="bi bi-cart-plus mr-2"></i>
-                        Add to Cart
+                        className={`mt-4 text-white py-1.5 px-2.5 rounded-lg text-sm font-semibold transition ${isInCart
+                                ? "bg-green-600 hover:bg-green-700"
+                                : "bg-blue-500 hover:bg-blue-700"
+                            }`}
+                    >
+                        <i className={`bi ${isInCart ? "bi-check-circle" : "bi-cart-plus"} mr-2`}></i>
+
+                        {isInCart ? "Added to Cart" : "Add to Cart"}
                     </button>
                     <NavLink
                         to={`/products/${product.id}`}
